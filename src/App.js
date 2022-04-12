@@ -4,7 +4,7 @@ import Toggle from './Components/Toggle';
 import StateClass from './Components/StateClass';
 import Post from './Components/Post';
 import { useState } from 'react';
-import MyButton from './Components/UI/button/MyButton';
+import PostForm from './Components/PostForm';
 
 function App() {
   const [posts, setPosts] = useState([
@@ -14,15 +14,18 @@ function App() {
     {id: 4, title: 'Golang', body: 'programming language'},
   ])
 
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost])
+  }
+
+  const removePost = (post) => {
+    setPosts(posts.filter(p => p.id !== post.id))
+  }
+
   return (
     <div className="App">
-      <form>
-        <input type="text" placeholder="Name of the post"/>
-        <input type="text" placeholder="Post content"/>
-        <MyButton>Create Post</MyButton>
-      </form>
-
-      <Post posts={posts} title='Posts List 1'/>
+      <PostForm create={createPost}/>
+      <Post remove={removePost} posts={posts} title='Posts List 1'/>
       <StateClass/>
       <Counter/>
       <Toggle />
